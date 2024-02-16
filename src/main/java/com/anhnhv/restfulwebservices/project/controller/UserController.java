@@ -1,13 +1,18 @@
 package com.anhnhv.restfulwebservices.project.controller;
 
 import com.anhnhv.restfulwebservices.project.dto.UserDTO;
+import com.anhnhv.restfulwebservices.project.exception.ErrorDetails;
+import com.anhnhv.restfulwebservices.project.exception.ResourceNotFoundException;
 import com.anhnhv.restfulwebservices.project.model.User;
 import com.anhnhv.restfulwebservices.project.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +24,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/add")
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO user){
+    public ResponseEntity<UserDTO> createUser(@RequestBody @Valid UserDTO user){
         UserDTO savedUser = userService.createUser(user);
 
         return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
@@ -40,7 +45,7 @@ public class UserController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable(name = "id")Long id,@RequestBody UserDTO user){
+    public ResponseEntity<UserDTO> updateUser(@PathVariable(name = "id")Long id,@RequestBody @Valid UserDTO user){
         user.setId(id);
         UserDTO updatedUser = userService.updateUser(user);
         return ResponseEntity.ok(updatedUser);
@@ -51,4 +56,5 @@ public class UserController {
         userService.deleteUserById(id);
         return new ResponseEntity<>("Delete success", HttpStatus.OK);
     }
+
 }

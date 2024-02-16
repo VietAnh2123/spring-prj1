@@ -4,7 +4,6 @@ import com.anhnhv.restfulwebservices.project.dto.UserDTO;
 import com.anhnhv.restfulwebservices.project.model.User;
 
 public class UserMapper {
-
     //convert user jpa entity to userdto
     public static UserDTO mapToUserDTO(User user){
         UserDTO userDTO = new UserDTO(
